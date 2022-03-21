@@ -1,0 +1,43 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "triple-equals": false,
+    "no-shadowed-variable": false,
+    "radix": false,
+    "no-console": false,
+    "no-empty": false,
+    "trailing-comma": [ false ],
+    "quotemark": [true, "double"],
+    "semicolon": [true, "always"],
+    "no-duplicate-imports": [true, {"allow-namespace-imports": true}],
+    "no-use-before-declare": true,
+    "member-ordering": [
+      true,
+      {
+        "alphabetize": true,
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "public-constructor",
+          "private-static-field",
+          "private-instance-field",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "ordered-imports": [true, {
+      "import-sources-order": "case-insensitive",
+      "named-imports-order": "case-insensitive"
+    }],
+    "whitespace": [true, "check-module"]
+  },
+  "rulesDirectory": []
+}
