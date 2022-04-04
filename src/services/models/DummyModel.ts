@@ -1,10 +1,15 @@
 import db from "../../db";
-import Errors from "../../modules/errors";
 
 const DummyModel = {
-    dummyFunc: async () => {
-        // some logic
+  dummyFunc: async () => {
+    try {
+      return await db.one(`
+                SELECT now();
+            `);
+    } catch (e) {
+      throw e;
     }
-}
+  },
+};
 
-export default DummyModel
+export default DummyModel;

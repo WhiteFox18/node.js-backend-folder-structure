@@ -1,15 +1,11 @@
-import {NextFunction, Request, Response, Router} from "express";
-import { Dummy } from "../../services";
+import { Router } from "express";
+import DummyController from "../../controllers/DummyController";
+import { dummyMiddleware } from "../../modules/middlewares";
 
-const router = Router()
+const router = Router();
 
-router.get("/dummy", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        res.json(await Dummy.dummyFunc())
-    } catch (e) {
-        console.log(e)
-        next(e)
-    }
-})
+router.use(dummyMiddleware);
 
-export default router
+router.get("/dummy", DummyController.dummyFunc);
+
+export default router;
