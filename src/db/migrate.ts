@@ -1,16 +1,14 @@
 import {migrate} from "postgres-migrations"
 import path from "path";
-import dotenv from "dotenv";
-
-dotenv.config();
+import config from "../config";
 
 (async () => {
     const dbConfig = {
-        database: process.env.DATABASE_NAME,
-        user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        host: process.env.DATABASE_HOST,
-        port: Number(process.env.DATABASE_PORT),
+        host: config.database.host,
+        database: config.database.name,
+        user: config.database.user,
+        password: config.database.password,
+        port: config.database.port,
 
         // Default: false for backwards-compatibility
         // This might change!
@@ -18,7 +16,7 @@ dotenv.config();
 
         // Default: "postgres"
         // Used when checking/creating "database-name"
-        defaultDatabase: process.env.DATABASE_DEFAULT_NAME
+        defaultDatabase: config.database.name
     }
 
     await migrate(dbConfig, path.join(path.resolve(), "constants", "migrations"))

@@ -1,11 +1,11 @@
-import db from "../../db";
+import { pgp } from "../../db";
 
 const DummyModel = {
   dummyFunc: async () => {
     try {
-      return await db.one(`
-                SELECT now();
-            `);
+      return pgp.as.format(`
+          SELECT now();
+      `);
     } catch (e) {
       throw e;
     }

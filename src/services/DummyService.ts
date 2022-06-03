@@ -12,6 +12,12 @@ export default class DummyService {
   }
 
   dummyFunc = async () => {
-    await DummyModel.dummyFunc();
+    try {
+      return this.db.oneOrNone(
+        await DummyModel.dummyFunc()
+      )
+    } catch (e) {
+      throw e;
+    }
   };
 }

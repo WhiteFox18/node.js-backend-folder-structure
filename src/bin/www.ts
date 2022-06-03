@@ -8,13 +8,14 @@
 import debug from "debug";
 import http from "http";
 import app from "./../app";
+import config from "../config";
 
 debug("dummy-backend:server");
 /**
  * Get port from environment and store in Express.
  */
 
-const PORT = normalizePort(process.env.PORT || "3000");
+const PORT = normalizePort(config.port || "3000");
 app.set("port", PORT);
 
 /**

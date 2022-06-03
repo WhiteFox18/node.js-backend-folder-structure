@@ -1,12 +1,9 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import logger from "morgan";
 import indexRouter from "./routes";
 import { errorHandling } from "./modules/helpers";
-
-dotenv.config();
 
 const app = express();
 

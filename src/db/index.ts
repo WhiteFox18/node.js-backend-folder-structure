@@ -1,12 +1,16 @@
 import * as promise from "bluebird"; // best promise library today
-import pgPromise, { IDatabase } from "pg-promise";
-import dotenv from "dotenv";
+import pgPromise, { ICTFObject, IDatabase, IFormattingOptions, QueryFile } from "pg-promise";
 import DummyService from "../services/DummyService";
-
-dotenv.config()
+import config from "../config";
+import DummyModel from "../services/models/DummyModel";
+import fs from "fs";
+import path from "path";
 
 interface IExtensions {
-    dummyService: DummyService
+    dummy: {
+        query: typeof DummyModel,
+        service: DummyService
+    }
 }
 
 export type ExtendedDatabase = IDatabase<IExtensions> & IExtensions
@@ -24,19 +28,41 @@ const initOptions: any = {
         // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
         // which should be as fast as possible.
         //  TODO: Create repo classes that include only SQL queries as methods and extend obj with repos
-        db.dummyService = new DummyService({db, pgp});
+        db.dummy = {
+            query: DummyModel,
+            service: new DummyService({db, pgp})
+        }
     }
 };
 
-
-const pgp = pgPromise({ capSQL: true })
+const pgp = pgPromise(initOptions)
 
 const connectionObject = {
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    port: Number(process.env.DATABASE_PORT),
+    host: config.database.host,
+    database: config.database.name,
+    user: config.database.user,
+    password: config.database.password,
+    port: config.database.port,
+}
+
+// To write every query from pgp.as.format into the file
+if(config.production !== true) {
+    const oldFormat = pgp.as.format
+    pgp.as.format = (query: string | QueryFile | ICTFObject, values?: any, options?: IFormattingOptions): string => {
+        const queryToReturn = oldFormat(query, values, options)
+
+        let formatted = queryToReturn
+
+        formatted += "\n"
+        formatted += "##############################"
+        formatted += "\n"
+
+        fs.writeFileSync(path.join(path.resolve(), "constants", "queries.txt"), formatted, {
+            flag: "a"
+        })
+
+        return queryToReturn
+    }
 }
 
 const db: ExtendedDatabase = pgp(connectionObject)
