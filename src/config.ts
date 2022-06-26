@@ -11,7 +11,8 @@ const config = {
         port: Number(process.env.DATABASE_PORT)
     },
     session_secret: process.env.SESSION_SECRET,
-    salt_round: process.env.SALT_ROUNDS,
+    jwt_secret: process.env.JWT_SECRET,
+    salt_round: Number(process.env.SALT_ROUNDS),
     production: process.env.PRODUCTION === "true",
     port: Number(process.env.PORT)
 }

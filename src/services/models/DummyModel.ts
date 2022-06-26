@@ -1,15 +1,11 @@
 import { pgp } from "../../db";
 
 const DummyModel = {
-  dummyFunc: async () => {
-    try {
-      return pgp.as.format(`
-          SELECT now();
-      `);
-    } catch (e) {
-      throw e;
-    }
-  },
+    dummyFunc: async () => {
+        return pgp.as.format(`
+            SELECT now();
+        `);
+    },
 };
 
 export default DummyModel;
