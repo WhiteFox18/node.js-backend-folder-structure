@@ -7,9 +7,10 @@ const router = Router();
 
 router
     .get("/dummy",
-        validate([
-            query("smth").optional({ checkFalsy: true, nullable: true }).isString(),
-        ]),
-        DummyController.dummyFunc);
+        validate(
+            query("search").optional({ checkFalsy: true, nullable: true }).isString(),
+        ),
+        DummyController.dummyFunc,
+    );
 
 export default router;

@@ -5,7 +5,7 @@ import { queryParser } from "express-query-parser";
 
 import indexRouter from "./routes";
 import { errorHandling } from "./modules/helpers";
-import { cookieSessions, corsAfter, corsBefore, createOffsetFieldInQuery } from "./modules/middlewares";
+import { corsAfter, corsBefore, createOffsetFieldInQuery } from "./modules/middlewares";
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(corsAfter);
 // app.use(cookieSessions);
 
 // create offset field in GET methods if limit and page exists
-app.use(createOffsetFieldInQuery)
+app.use(createOffsetFieldInQuery);
 
 // Routes
 app.use("/api", indexRouter);

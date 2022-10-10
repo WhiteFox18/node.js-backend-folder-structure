@@ -6,19 +6,37 @@
 // which may be a little better performing, but lacks all the nice formatting
 // provided by pg-monitor.
 
-import os = require("os");
-import fs = require("fs");
+import os from "os";
+import * as fs from "fs";
 import * as pgMonitor from "pg-monitor";
 import { IInitOptions } from "pg-promise";
 import config from "../config";
+import path from "path";
 
 pgMonitor.setTheme("matrix"); // changing the default theme;
 
 // Flag to indicate whether we are in a DEV environment:
-const $DEV = config.production === false;
+const $DEV = config.production;
 
 // Log file for database-related errors:
-const logFile = "./db/errors.log";
+const dir = path.join(path.resolve(), "constants");
+const logFile = path.join(dir, "database_errors.log");
+
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, {
+        mode: 0o755,
+    });
+}
+
+if (!fs.existsSync(logFile)) {
+    fs.writeFileSync(
+        logFile,
+        "",
+        {
+            mode: 0o755,
+        },
+    );
+}
 
 // Below we are logging errors exactly the way they are reported by pg-monitor,
 // which you can tweak any way you like, as parameter 'info' provides all the
@@ -26,7 +44,6 @@ const logFile = "./db/errors.log";
 //
 // see: https://github.com/vitaly-t/pg-monitor#log
 pgMonitor.setLog((msg, info) => {
-
     // In a PROD environment we will only receive event 'error',
     // because this is how we set it up below.
 
@@ -52,12 +69,11 @@ pgMonitor.setLog((msg, info) => {
         // If it is not a DEV environment:
         info.display = false; // display nothing;
     }
-
 });
 
 export class Diagnostics {
     // Monitor initialization function;
-    static init<Ext = {}>(options: IInitOptions<Ext>) {
+    static init<Ext = any>(options: IInitOptions<Ext>) {
         if ($DEV) {
             // In a DEV environment, we attach to all supported events:
             pgMonitor.attach(options);

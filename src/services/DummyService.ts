@@ -1,19 +1,16 @@
-import { DatabaseClient, ServiceProps } from "../types";
-import { ExtendedDatabase } from "../db";
+import { ExtendedDatabase } from "../db/initOptions";
 
 export default class DummyService {
-    private db: ExtendedDatabase = null;
-    private pgp: DatabaseClient = null;
+    private readonly db: ExtendedDatabase = null;
 
-    constructor(props: ServiceProps) {
-        this.db = props.db;
-        this.pgp = props.pgp;
+    constructor(db: ExtendedDatabase) {
+        this.db = db;
     }
 
-    dummyFunc = async () => {
+    dummyFunc = async (data: { search: string }) => {
         try {
             return this.db.oneOrNone(
-                await this.db.dummy.query.dummyFunc(),
+                this.db.dummy.query.dummyFunc(data),
             );
         } catch (e) {
             throw e;

@@ -3,3 +3,4 @@ node_modules
 dist
 .env
 queries.txt
+database_errors.log

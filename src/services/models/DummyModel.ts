@@ -1,7 +1,7 @@
 import { pgp } from "../../db";
 
 const DummyModel = {
-    dummyFunc: async () => {
+    dummyFunc: (data: { search: string }) => {
         return pgp.as.format(`
             SELECT now();
         `);
