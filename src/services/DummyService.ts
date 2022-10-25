@@ -1,4 +1,4 @@
-import { ExtendedDatabase } from "../db/initOptions";
+import { ExtendedDatabase, Transaction } from "../db/initOptions";
 
 export default class DummyService {
     private readonly db: ExtendedDatabase = null;
@@ -8,12 +8,8 @@ export default class DummyService {
     }
 
     dummyFunc = async (data: { search: string }) => {
-        try {
-            return this.db.oneOrNone(
-                this.db.dummy.query.dummyFunc(data),
-            );
-        } catch (e) {
-            throw e;
-        }
+        return await this.db.tx(async (transaction: Transaction) => {
+            return this.db.dummy.query.dummyFunc(data, transaction);
+        });
     };
 }

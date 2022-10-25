@@ -1,11 +1,15 @@
-import { pgp } from "../../db";
+import { ExtendedDatabase, Transaction } from "../../db/initOptions";
 
-const DummyModel = {
-    dummyFunc: (data: { search: string }) => {
-        return pgp.as.format(`
+export default class DummyModel {
+    private readonly db: ExtendedDatabase = null;
+
+    constructor(db: ExtendedDatabase) {
+        this.db = db;
+    }
+
+    dummyFunc = async (data: { search: string }, db: ExtendedDatabase | Transaction = this.db) => {
+        return await db.one(`
             SELECT now();
         `);
-    },
-};
-
-export default DummyModel;
+    };
+}

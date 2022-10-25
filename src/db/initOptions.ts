@@ -8,9 +8,9 @@ import ElasticService from "../services/ElasticService";
 import ElasticModel from "../services/models/ElasticModel";
 
 export interface IExtensions {
-    dummy: { service: DummyService; query: typeof DummyModel };
-    caching: { service: CachingService; query: typeof CachingModel };
-    elastic: { service: ElasticService; query: typeof ElasticModel };
+    dummy: { service: DummyService; query: DummyModel };
+    caching: { service: CachingService; query: CachingModel };
+    elastic: { service: ElasticService; query: ElasticModel };
 }
 
 export type Transaction = ITask<IExtensions> & IExtensions
@@ -29,17 +29,17 @@ export const initOptions: any = {
         // which should be as fast as possible.
         //  TODO: Create repo classes that include only SQL queries as methods and extend obj with repos
         db.dummy = {
-            query: DummyModel,
+            query: new DummyModel(db),
             service: new DummyService(db),
         };
 
         db.elastic = {
-            query: ElasticModel,
+            query: new ElasticModel(db),
             service: new ElasticService(db),
         };
 
         db.caching = {
-            query: CachingModel,
+            query: new CachingModel(db),
             service: new CachingService(db),
         };
     },

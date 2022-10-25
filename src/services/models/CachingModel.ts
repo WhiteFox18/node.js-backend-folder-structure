@@ -1,3 +1,9 @@
-const CachingModel = {};
+import { ExtendedDatabase } from "../../db/initOptions";
 
-export default CachingModel;
+export default class CachingModel {
+    private readonly db: ExtendedDatabase = null;
+
+    constructor(db: ExtendedDatabase) {
+        this.db = db;
+    }
+};
