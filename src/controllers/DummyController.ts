@@ -1,19 +1,18 @@
-import { NextFunction, Request, Response } from "express";
-import db from "../db";
+import { NextFunction } from "express"
+import { CustomRequest, CustomResponse } from "../types"
+import db from "../db"
 
 const DummyController = {
-    dummyFunc: async (req: Request, res: Response, next: NextFunction) => {
+    dummyFunc: async (req: CustomRequest, res: CustomResponse, next: NextFunction) => {
         try {
             res.json(
-                await db.dummy.service.dummyFunc({
-                    search: String(req.query.search),
-                }),
-            );
+                await db.caching.service.getDummy(),
+            )
         } catch (e) {
-            next(e);
+            next(e)
         }
     },
-};
+}
 
-export default DummyController;
+export default DummyController
 

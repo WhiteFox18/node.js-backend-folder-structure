@@ -1,8 +1,15 @@
-import dotenv from "dotenv";
+import dotenv from "dotenv"
+import path from "path"
 
-dotenv.config();
+const node_env = process.env.NODE_ENV ? process.env.NODE_ENV.trim() : "development"
+
+dotenv.config({
+    path: path.join(path.resolve(), `.env.${node_env}`),
+})
 
 const config = {
+    node_env: node_env,
+    allowed_origins: process.env.ALLOWED_ORIGINS.split(", "),
     database: {
         host: process.env.DATABASE_HOST,
         name: process.env.DATABASE_NAME,
@@ -14,7 +21,6 @@ const config = {
     session_secret: process.env.SESSION_SECRET,
     jwt_secret: process.env.JWT_SECRET,
     salt_round: Number(process.env.SALT_ROUNDS),
-    production: process.env.PRODUCTION === "true",
     port: Number(process.env.PORT),
     aws: {
         region: process.env.AWS_REGION,
@@ -30,6 +36,6 @@ const config = {
         password: String(process.env.ELASTIC_PASSWORD),
         node_url: process.env.ELASTIC_NODE_URL,
     },
-};
+}
 
-export default config;
+export default config

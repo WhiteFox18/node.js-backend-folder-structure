@@ -1,6 +1,6 @@
-import { migrate } from "postgres-migrations";
-import path from "path";
-import config from "../../config";
+import { migrate } from "postgres-migrations"
+import path from "path"
+import config from "../../config"
 
 (async () => {
     const dbConfig = {
@@ -17,12 +17,12 @@ import config from "../../config";
         // Default: "postgres"
         // Used when checking/creating "database-name"
         defaultDatabase: config.database.default_name,
-    };
+    }
 
     await migrate(
         dbConfig,
         path.join(path.resolve(), "constants", "migrations"),
-    );
+    )
 
-    process.exit(0);
-})();
+    process.exit(0)
+})()

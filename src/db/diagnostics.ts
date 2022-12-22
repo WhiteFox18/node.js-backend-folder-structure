@@ -6,26 +6,26 @@
 // which may be a little better performing, but lacks all the nice formatting
 // provided by pg-monitor.
 
-import os from "os";
-import * as fs from "fs";
-import * as pgMonitor from "pg-monitor";
-import { IInitOptions } from "pg-promise";
-import config from "../config";
-import path from "path";
+import os from "os"
+import * as fs from "fs"
+import * as pgMonitor from "pg-monitor"
+import { IInitOptions } from "pg-promise"
+import config from "../config"
+import path from "path"
 
-pgMonitor.setTheme("matrix"); // changing the default theme;
+pgMonitor.setTheme("matrix") // changing the default theme;
 
 // Flag to indicate whether we are in a DEV environment:
-const $DEV = config.production;
+const $DEV = config.node_env !== "production"
 
 // Log file for database-related errors:
-const dir = path.join(path.resolve(), "constants");
-const logFile = path.join(dir, "database_errors.log");
+const dir = path.join(path.resolve(), "constants")
+const logFile = path.join(dir, "database_errors.log")
 
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, {
         mode: 0o755,
-    });
+    })
 }
 
 if (!fs.existsSync(logFile)) {
@@ -35,7 +35,7 @@ if (!fs.existsSync(logFile)) {
         {
             mode: 0o755,
         },
-    );
+    )
 }
 
 // Below we are logging errors exactly the way they are reported by pg-monitor,
@@ -51,13 +51,13 @@ pgMonitor.setLog((msg, info) => {
     // errors only, or else the file will grow out of proportion in no time.
 
     if (info.event === "error") {
-        let logText = os.EOL + msg; // line break + next error message;
+        let logText = os.EOL + msg // line break + next error message;
         if (info.time) {
             // If it is a new error being reported,
             // and not an additional error line;
-            logText = os.EOL + logText; // add another line break in front;
+            logText = os.EOL + logText // add another line break in front;
         }
-        fs.appendFileSync(logFile, logText); // add error handling as required;
+        fs.appendFileSync(logFile, logText) // add error handling as required;
     }
 
     // We absolutely must not let the monitor write anything into the console
@@ -67,20 +67,20 @@ pgMonitor.setLog((msg, info) => {
 
     if (!$DEV) {
         // If it is not a DEV environment:
-        info.display = false; // display nothing;
+        info.display = false // display nothing;
     }
-});
+})
 
 export class Diagnostics {
     // Monitor initialization function;
     static init<Ext = any>(options: IInitOptions<Ext>) {
         if ($DEV) {
             // In a DEV environment, we attach to all supported events:
-            pgMonitor.attach(options);
+            pgMonitor.attach(options)
         } else {
             // In a PROD environment we should only attach to the type of events
             // that we intend to log. And we are only logging event 'error' here:
-            pgMonitor.attach(options, ["error"]);
+            pgMonitor.attach(options, ["error"])
         }
     }
 }

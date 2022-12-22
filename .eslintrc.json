@@ -1,0 +1,60 @@
+{
+	"env": {
+		"node": true,
+		"es2021": true
+	},
+	"ignorePatterns": [
+		"dist/*",
+		"node_modules/*"
+	],
+	"extends": [
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2020
+	},
+	"plugins": [
+		"@typescript-eslint/eslint-plugin"
+	],
+	"rules": {
+		"quotes": [
+			2,
+			"double"
+		],
+		"triple-equals": 0,
+		"no-shadowed-variable": 0,
+		"no-empty": [
+			"error",
+			{
+				"allowEmptyCatch": true
+			}
+		],
+		"no-duplicate-imports": "error",
+		"@typescript-eslint/ban-ts-comment": 0,
+		"@typescript-eslint/no-explicit-any": 0,
+		"@typescript-eslint/member-ordering": [
+			2,
+			{
+				"default": [
+					"private-constructor",
+					"public-constructor",
+					"private-static-field",
+					"public-static-field",
+					"private-instance-field",
+					"public-instance-field",
+					"private-instance-method",
+					"protected-instance-method",
+					"public-instance-method"
+				]
+			}
+		],
+		"@typescript-eslint/no-empty-interface": [
+			"error",
+			{
+				"allowSingleExtends": true
+			}
+		],
+		"@typescript-eslint/no-inferrable-types": 0
+	}
+}

@@ -1,5 +1,5 @@
-import { Client } from "@elastic/elasticsearch";
-import config from "../../config";
+import { Client } from "@elastic/elasticsearch"
+import config from "../../config"
 
 const elasticClient = new Client({
     auth: {
@@ -7,6 +7,6 @@ const elasticClient = new Client({
         password: config.elastic.password,
     },
     node: config.elastic.node_url,
-});
+})
 
-export default elasticClient;
+export default elasticClient

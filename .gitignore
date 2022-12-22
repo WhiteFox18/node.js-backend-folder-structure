@@ -1,6 +1,10 @@
 .idea
 node_modules
 dist
-.env
 queries.txt
 database_errors.log
+
+.env
+.env.development
+.env.staging
+.env.production

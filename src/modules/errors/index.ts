@@ -1,4 +1,4 @@
-import CustomError from "./CustomError";
+import CustomError from "./CustomError"
 
 const Errors = {
     notExists: (fields: string[]) => {
@@ -7,7 +7,7 @@ const Errors = {
             message: "notExists",
             description: "item not exists",
             fields: fields,
-        });
+        })
     },
     unexpectedServerError: () => {
         throw new CustomError({
@@ -15,8 +15,8 @@ const Errors = {
             message: "unexpectedServerError",
             description: "unexpected server error occurred",
             fields: [],
-        });
+        })
     },
-};
+}
 
-export default Errors;
+export default Errors

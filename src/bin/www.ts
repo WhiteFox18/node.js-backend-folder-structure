@@ -5,55 +5,51 @@
  */
 
 // @ts-ignore
-import debug from "debug";
-import http from "http";
-import app from "./../app";
-import config from "../config";
+import debug from "debug"
+import http from "http"
+import app from "./../app"
+import config from "../config"
 
-debug("dummy-backend:server");
+debug("dummy-backend:server")
 /**
  * Get port from environment and store in Express.
  */
 
-const PORT = normalizePort(config.port || "3000");
-app.set("port", PORT);
+const PORT = normalizePort(config.port || "3000")
+app.set("port", PORT)
 
 /**
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
-// const server = https.createServer({
-//   key: fs.readFileSync(path.join(path.resolve(), "selfsigned.key")),
-//   cert: fs.readFileSync(path.join(path.resolve(), "selfsigned.crt")),
-// }, app);
+const server = http.createServer(app)
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(PORT);
-server.on("error", onError);
-server.on("listening", onListening);
+server.listen(PORT)
+server.on("error", onError)
+server.on("listening", onListening)
 
 /**
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val: any) {
-    const port = parseInt(val, 10);
+    const port = parseInt(val, 10)
 
     if (isNaN(port)) {
         // named pipe
-        return val;
+        return val
     }
 
     if (port >= 0) {
         // port number
-        return port;
+        return port
     }
 
-    return false;
+    return false
 }
 
 /**
@@ -62,23 +58,23 @@ function normalizePort(val: any) {
 
 function onError(error: any) {
     if (error.syscall !== "listen") {
-        throw error;
+        throw error
     }
 
-    const bind = typeof PORT === "string" ? `Pipe ${PORT}` : `Port ${PORT}`;
+    const bind = typeof PORT === "string" ? `Pipe ${PORT}` : `Port ${PORT}`
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case "EACCES":
-            console.error(`${bind} requires elevated privileges`);
-            process.exit(1);
-            break;
+            console.error(`${bind} requires elevated privileges`)
+            process.exit(1)
+            break
         case "EADDRINUSE":
-            console.error(`${bind} is already in use`);
-            process.exit(1);
-            break;
+            console.error(`${bind} is already in use`)
+            process.exit(1)
+            break
         default:
-            throw error;
+            throw error
     }
 }
 
@@ -87,9 +83,9 @@ function onError(error: any) {
  */
 
 function onListening() {
-    const addr = server.address();
-    const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
-    debug(`Listening on ${bind}`);
+    const addr = server.address()
+    const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`
+    debug(`Listening on ${bind}`)
 }
 
-export default server;
+export default server

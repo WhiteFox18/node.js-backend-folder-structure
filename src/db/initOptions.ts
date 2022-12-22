@@ -1,16 +1,11 @@
-import * as promise from "bluebird";
-import pgPromise, { IDatabase, ITask } from "pg-promise";
-import DummyService from "../services/DummyService";
-import DummyModel from "../services/models/DummyModel";
-import CachingService from "../services/CachingService";
-import CachingModel from "../services/models/CachingModel";
-import ElasticService from "../services/ElasticService";
-import ElasticModel from "../services/models/ElasticModel";
+import * as promise from "bluebird"
+import pgPromise, { IDatabase, ITask } from "pg-promise"
+
+import CachingModel from "../services/CachingService/model"
+import CachingService from "../services/CachingService"
 
 export interface IExtensions {
-    dummy: { service: DummyService; query: DummyModel };
-    caching: { service: CachingService; query: CachingModel };
-    elastic: { service: ElasticService; query: ElasticModel };
+    caching: { model: CachingModel; service: CachingService; };
 }
 
 export type Transaction = ITask<IExtensions> & IExtensions
@@ -28,25 +23,16 @@ export const initOptions: any = {
         // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
         // which should be as fast as possible.
         //  TODO: Create repo classes that include only SQL queries as methods and extend obj with repos
-        db.dummy = {
-            query: new DummyModel(db),
-            service: new DummyService(db),
-        };
-
-        db.elastic = {
-            query: new ElasticModel(db),
-            service: new ElasticService(db),
-        };
 
         db.caching = {
-            query: new CachingModel(db),
+            model: new CachingModel(db),
             service: new CachingService(db),
-        };
+        }
     },
-};
+}
 
 export const writableMode = new pgPromise.txMode.TransactionMode({
     tiLevel: pgPromise.txMode.isolationLevel.serializable,
     readOnly: false,
     deferrable: true,
-});
+})

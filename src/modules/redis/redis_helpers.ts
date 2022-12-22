@@ -1,5 +1,5 @@
-import redis from "./redis_promise";
+import redis from "./redis_promise"
 
 export const deleteRedisKeys = async () => {
-    await redis.del("*");
-};
+    await redis.del("*")
+}

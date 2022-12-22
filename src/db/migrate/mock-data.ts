@@ -1,9 +1,9 @@
-import { migrate } from "postgres-migrations";
-import path from "path";
-import config from "../../config";
-import db from "../index";
-import { deleteRedisKeys } from "../../modules/redis/redis_helpers";
-import { createElasticIndexes, deleteElasticIndexes } from "../../modules/elasticsearch/elastic_helpers";
+import { migrate } from "postgres-migrations"
+import path from "path"
+import config from "../../config"
+import db from "../index"
+import { deleteRedisKeys } from "../../modules/redis/redis_helpers"
+import { createElasticIndexes, deleteElasticIndexes } from "../../modules/elasticsearch/elastic_helpers"
 
 (async () => {
     const dbConfig = {
@@ -20,25 +20,25 @@ import { createElasticIndexes, deleteElasticIndexes } from "../../modules/elasti
         // Default: "postgres"
         // Used when checking/creating "database-name"
         defaultDatabase: config.database.default_name,
-    };
+    }
 
-    await db.none("DROP TABLE IF EXISTS migrations;");
+    await db.none("DROP TABLE IF EXISTS migrations;")
 
-    await deleteElasticIndexes();
-    await createElasticIndexes();
-    await deleteRedisKeys();
+    await deleteElasticIndexes()
+    await createElasticIndexes()
+    await deleteRedisKeys()
 
-    await db.none("DROP TABLE IF EXISTS migrations;");
+    await db.none("DROP TABLE IF EXISTS migrations;")
 
     await migrate(
         dbConfig,
         path.join(path.resolve(), "constants", "migrations-mock-data"),
-    );
+    )
 
-    await db.none("DROP TABLE IF EXISTS migrations;");
+    await db.none("DROP TABLE IF EXISTS migrations;")
 
     // if there is
     setTimeout(() => {
-        process.exit(0);
-    }, 10000);
-})();
+        process.exit(0)
+    }, 10000)
+})()

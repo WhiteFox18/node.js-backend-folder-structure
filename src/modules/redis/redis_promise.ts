@@ -1,5 +1,5 @@
-import { promisify } from "util";
-import redisClient from "./index";
+import { promisify } from "util"
+import redisClient from "./index"
 
 const redisPromise = {
     set: promisify(redisClient.set).bind(redisClient),
@@ -9,6 +9,6 @@ const redisPromise = {
     hGet: promisify(redisClient.hget).bind(redisClient),
     hSet: promisify(redisClient.hset).bind(redisClient),
     hDel: promisify(redisClient.hdel).bind(redisClient),
-};
+}
 
-export default redisPromise;
+export default redisPromise
