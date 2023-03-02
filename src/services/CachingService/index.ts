@@ -11,7 +11,7 @@ export default class CachingService {
     }
 
     execute = async (data: CachingExecute) => {
-
+        return data
     }
 
     getDummy = async () => {

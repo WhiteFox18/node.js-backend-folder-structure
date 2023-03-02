@@ -4,7 +4,7 @@ dist
 queries.txt
 database_errors.log
 
-.env
+.env.development
 .env.development
 .env.staging
 .env.production

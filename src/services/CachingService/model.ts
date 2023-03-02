@@ -6,4 +6,4 @@ export default class CachingModel {
     constructor(db: ExtendedDatabase) {
         this.db = db
     }
-};
+}

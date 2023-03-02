@@ -110,7 +110,7 @@ export const corsBefore = cors({
     origin(origin, callback) {
         // allow requests with no origin
         // (like mobile apps or curl requests)
-        if (!origin && config.production === false) return callback(null, true)
+        if (!origin && config.node_env !== "production") return callback(null, true)
 
         if (allowedOrigins.indexOf(origin) === -1) {
             return callback(new Error("cors"), false)
@@ -147,7 +147,7 @@ export const corsAfter = (req: Request, res: Response, next: NextFunction) => {
 export const createOffsetFieldInQuery = (req: Request, res: Response, next: NextFunction) => {
     if (req.method === "GET") {
         if (req.query.limit && req.query.page) {
-            let offset = getOffset({
+            const offset = getOffset({
                 limit: Number.parseInt(req.query.limit as string),
                 page: Number.parseInt(req.query.page as string),
             })

@@ -6,7 +6,8 @@ import * as yup from "yup"
 const router = Router()
 
 router
-    .get("/dummy",
+    .get(
+        "/dummy",
         validate({
             query: {
                 search: yup.string().nullable(),

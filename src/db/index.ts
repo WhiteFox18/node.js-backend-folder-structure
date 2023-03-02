@@ -18,7 +18,7 @@ const dbConfig = {
 const pgp: IMain = pgPromise(initOptions)
 
 // To write every query from pgp.as.format into the file
-if (config.production !== true) {
+if (config.node_env !== "production") {
     if (!fs.existsSync(path.join(path.resolve(), "constants"))) {
         fs.mkdirSync(path.join(path.resolve(), "constants"), {
             mode: 0o755,

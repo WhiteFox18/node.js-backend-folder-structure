@@ -48,7 +48,7 @@ export const paginate = (result: any) => {
     return result
 }
 
-// Check if database query result has data if no, fire 404 error
+// Check if database query result has data if no fire 404 error
 export const checkQueryResultNoData = (data: any) => {
     if (!data)
         if (!Array.isArray(data))
