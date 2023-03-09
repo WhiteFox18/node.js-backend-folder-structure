@@ -57,3 +57,8 @@ export enum FileTypes {
     png = ".png",
     svg = ".svg"
 }
+
+export interface SendMail {
+    email: string;
+    code: string;
+}

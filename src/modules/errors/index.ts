@@ -17,6 +17,14 @@ const Errors = {
             fields: [],
         })
     },
+    emailServiceNotWorking: () => {
+        throw new CustomError({
+            statusCode: 503,
+            message: "emailServiceNotWorking",
+            description: "email service is currently unavailable",
+            fields: [],
+        })
+    },
 }
 
 export default Errors

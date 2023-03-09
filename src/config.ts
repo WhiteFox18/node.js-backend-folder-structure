@@ -36,6 +36,10 @@ const config = {
         password: String(process.env.ELASTIC_PASSWORD),
         node_url: process.env.ELASTIC_NODE_URL,
     },
+    sendgrid: {
+        api_key: String(process.env.SENDGRID_API_KEY),
+        email_address: String(process.env.SENDGRID_EMAIL_ADDRESS),
+    },
 }
 
 export default config
